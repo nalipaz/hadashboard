@@ -1,0 +1,8 @@
+init/dashing
+init/hapush
+Gemfile.lock
+dashing.pid
+hapush/hapush.pid
+log/
+persistent.db
+history.yml
