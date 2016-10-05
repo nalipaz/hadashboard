@@ -25,7 +25,7 @@ set -e
 
 # Must be a valid filename
 NAME=hapush
-HAPUSH_DIR=/srv/hass/src/hadashboard/hapush
+HAPUSH_DIR=/home/plex/.hadashboard/hapush
 DAEMON="$HAPUSH_DIR/$NAME.py"
 PIDFILE="$HAPUSH_DIR/$NAME.pid"
 CFGFILE="$HAPUSH_DIR/$NAME.cfg"

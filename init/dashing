@@ -25,7 +25,7 @@ set -e
 
 # Must be a valid filename
 NAME=dashing
-DASHING_DIR=/srv/hass/src/hadashboard
+DASHING_DIR=/home/plex/.hadashboard
 DAEMON=/usr/local/bin/dashing
 PIDFILE="$DASHING_DIR/$NAME.pid"
 DAEMON_OPTS="start -d -P $PIDFILE"
