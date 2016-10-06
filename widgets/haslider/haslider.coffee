@@ -25,7 +25,7 @@ class Dashing.Haslider extends Dashing.ClickableWidget
     set: Batman.Property.defaultAccessor.set
 
   @accessor 'icon-style', ->
-    if @get('state') == 'on' then 'dimmer-icon-on' else 'dimmer-icon-off'
+    if @get('state') == 'on' then 'slider-icon-on' else 'slider-icon-off'
 
   toggleState: ->
     newState = if @get('state') == 'on' then 'off' else 'on'
