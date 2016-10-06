@@ -300,13 +300,21 @@ SCHEDULER.every '15m', :first_in => 0 do |job|
 	response = ha_api("states/sensor.forecastio_wind_bearing", "get")
 	windbearing = response["state"]
 
+        response = ha_api("states/sensor.forecastio_wind_speed", "get")
+        windspeed = response["state"]
 	
 	response = ha_api("states/sensor.forecastio_apparent_temperature", "get")
 	tempchill = response["state"]
 	
 	response = ha_api("states/sensor.forecastio_icon", "get")
 	icon = response["state"].gsub(/-/, '_')
+
+        response = ha_api("states/sensor.forecastio_daily_high_temperature", "get")
+        dailyhigh = response["state"]
  
+        response = ha_api("states/sensor.forecastio_daily_low_temperature", "get")
+        dailylow = response["state"]
+
 	#Emit the event
 	send_event('weather', {
 		temp: temp,
@@ -317,6 +325,8 @@ SCHEDULER.every '15m', :first_in => 0 do |job|
 		precip: precip,
 		windspeed: windspeed,
 		windbearing: windbearing,
-		pressure: pressure
+		pressure: pressure,
+		dailyhigh: dailyhigh,
+		dailylow: dailylow
 	})
 end
