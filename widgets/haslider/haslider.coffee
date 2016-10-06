@@ -3,48 +3,81 @@ class Dashing.Haslider extends Dashing.ClickableWidget
     super
     @queryState()
 
-
   @accessor 'state',
-    get: -> @_state ? '100'
+    get: -> @_state ? 'off'
     set: (key, value) -> @_state = value
 
-  @accessor 'min',
-    get: -> @_min ? '1'
-    set: (key, value) -> @_min = value
+  @accessor 'level',
+    get: -> @_level ? '50'
+    set: (key, value) -> @_level = value
 
-  @accessor 'max',
-    get: -> @_max ? '100'
-    set: (key, value) -> @_max = value
+  @accessor 'icon',
+    get: -> if @['icon'] then @['icon'] else
+      if @get('state') == 'on' then @get('iconon') else @get('iconoff')
+    set: Batman.Property.defaultAccessor.set
 
-  @accessor 'step',
-    get: -> @_step ? '100'
-    set: (key, value) -> @_step = value
+  @accessor 'iconon',
+    get: -> @['iconon'] ? 'circle'
+    set: Batman.Property.defaultAccessor.set
 
-  postState: ->
-    path = '/homeassistant/inputslider'
-    $.post path,
-      widgetId: @get('id'),
+  @accessor 'iconoff',
+    get: -> @['iconoff'] ? 'circle-thin'
+    set: Batman.Property.defaultAccessor.set
+
+  @accessor 'icon-style', ->
+    if @get('state') == 'on' then 'dimmer-icon-on' else 'dimmer-icon-off'
+
+  toggleState: ->
+    newState = if @get('state') == 'on' then 'off' else 'on'
+    @set 'state', newState
+    return newState
 
   queryState: ->
-    path = '/homeassistant/inputslider'
-    $.get path,
-      deviceId: @get('id')
+    $.get '/homeassistant/dimmer',
+      widgetId: @get('id'),
       (data) =>
         json = JSON.parse data
         @set 'state', json.state
-        @set 'min', json.attributes.min
-        @set 'max', json.attributes.max
-        @set 'step', json.attributes.step
+        @set 'level', json.level
+
+  postState: ->
+    newState = @toggleState()
+    $.post '/homeassistant/dimmer',
+      widgetId: @get('id'),
+      command: newState,
+      (data) =>
+        json = JSON.parse data
+        if json.error != 0
+          @toggleState()
+
+  getLevel: ->
+    newLevel = parseInt(@get('level'))+10
+    if newLevel > 100
+      newLevel = 100
+    else if newLevel < 0
+      newLevel = 0
+    @set 'level', newLevel
+    return @get('level')
+
+  setLevel: ->
+    newLevel = @getLevel()
+    $.post '/homeassistant/dimmerLevel',
+      widgetId: @get('id'),
+      command: newLevel,
+      (data) =>
+        json = JSON.parse data
 
   ready: ->
-
+    if @get('bgcolor')
+      $(@node).css("background-color", @get('bgcolor'))
+    else
+      $(@node).css("background-color", "#444")
   onData: (data) ->
-    @queryState()
 
-  onClick: (node, event) ->
-    @postState()
-    Dashing.cycleDashboardsNow(
-      boardnumber: @get('page'),
-      stagger: @get('stagger'),
-      fastTransition: @get('fasttransition'),
-      transitiontype: @get('transitiontype'))
+  onChange: (event) ->
+    if event.target.id == "slider"
+      @postState()
+
+  onClick: (event) ->
+    if event.target.id == "switch"
+      @postState()
