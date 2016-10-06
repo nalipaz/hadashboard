@@ -1,6 +1,5 @@
 <h1 class="title" data-bind="title"></h1>
 
 
-<h2><input type="range" data-bind-data-min="min" data-bind-data-max="max" data-bind-value="state" id="fader" />
-    <i class="style" data-bind-style="color | prepend 'color:' "><i class="style" data-bind-style="opacitylevel | prepend 'opacity:' "><i data-bind-class="icon | prepend 'fa fa-'"></i></i></i></h2>
-<h1 data-bind="levellabel | raw"></h1>
+<h2 data-bind-class="icon-style"><i data-bind-class="icon | prepend 'fa fa-'"></i></h2>
+<input class="slider" type="range" min="0" max="100" data-bind-value="level" id="slider" />
