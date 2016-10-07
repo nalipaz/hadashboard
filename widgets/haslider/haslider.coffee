@@ -77,6 +77,7 @@ class Dashing.Haslider extends Dashing.ClickableWidget
   onData: (data) ->
 
   onChange: (event) ->
+    alert event.target.id
     if event.target.id == "slider-slider"
       @postLevel()
 
