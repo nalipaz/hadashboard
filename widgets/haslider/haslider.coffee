@@ -74,7 +74,7 @@ class Dashing.Haslider extends Dashing.ClickableWidget
       $(@node).css("background-color", "#444")
   onData: (data) ->
 
-  onChange: (event) ->
+  onRangeChange: (event) ->
     if event.target.id == "slider"
       @postState()
 
