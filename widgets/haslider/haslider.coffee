@@ -66,6 +66,8 @@ class Dashing.Haslider extends Dashing.ClickableWidget
       command: newLevel,
       (data) =>
         json = JSON.parse data
+        if json.error != 0
+          @set 'level', 100
 
   ready: ->
     if @get('bgcolor')
