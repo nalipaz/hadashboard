@@ -51,6 +51,7 @@ class Dashing.Haslider extends Dashing.ClickableWidget
           @toggleState()
 
   getLevel: ->
+    alert @get('level')
     newLevel = parseInt(@get('level'))
     if newLevel > 100
       newLevel = 100
