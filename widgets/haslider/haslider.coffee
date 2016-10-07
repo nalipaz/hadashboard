@@ -51,7 +51,7 @@ class Dashing.Haslider extends Dashing.ClickableWidget
           @toggleState()
 
   getLevel: ->
-    newLevel = parseInt(@get('level'))+10
+    newLevel = parseInt(@get('level'))
     if newLevel > 100
       newLevel = 100
     else if newLevel < 0
@@ -74,7 +74,7 @@ class Dashing.Haslider extends Dashing.ClickableWidget
       $(@node).css("background-color", "#444")
   onData: (data) ->
 
-  onRangeChange: (event) ->
+  onInputChange: (event) ->
     if event.target.id == "slider-slider"
       @postLevel()
 
