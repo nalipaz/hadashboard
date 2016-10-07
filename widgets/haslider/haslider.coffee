@@ -59,7 +59,7 @@ class Dashing.Haslider extends Dashing.ClickableWidget
     @set 'level', newLevel
     return @get('level')
 
-  setLevel: ->
+  postLevel: ->
     newLevel = @getLevel()
     $.post '/homeassistant/dimmerLevel',
       widgetId: @get('id'),
@@ -76,7 +76,7 @@ class Dashing.Haslider extends Dashing.ClickableWidget
 
   onRangeChange: (event) ->
     if event.target.id == "slider-slider"
-      @postState()
+      @postLevel()
 
   onClick: (event) ->
     if event.target.id == "slider-switch"
