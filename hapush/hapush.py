@@ -123,8 +123,7 @@ def dashboard_update(widget_id, type, state):
       try:
         brightness = roundup(int(state['attributes']['brightness'])/2.55)
       except KeyError:
-        brightness = 30
-        astate = 'off'
+        brightness = null
       values = {"state": astate, "level": brightness}
       logger.info("switch." + widget_id + " -> state = " + astate + ", brightness = " + str(brightness))
       call_ha(widget_id, values)

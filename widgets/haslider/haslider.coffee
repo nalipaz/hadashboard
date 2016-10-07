@@ -38,7 +38,7 @@ class Dashing.Haslider extends Dashing.ClickableWidget
       (data) =>
         json = JSON.parse data
         @set 'state', json.state
-        @set 'level', json.level
+        if json.level then @set 'level', json.level else @set 'level', @getLevel()
 
   postState: ->
     newState = @toggleState()
@@ -47,8 +47,6 @@ class Dashing.Haslider extends Dashing.ClickableWidget
       command: newState,
       (data) =>
         json = JSON.parse data
-        if json.error != 0
-          @toggleState()
 
   getLevel: ->
     newLevel = parseInt(@get('level'))
@@ -66,8 +64,6 @@ class Dashing.Haslider extends Dashing.ClickableWidget
       command: newLevel,
       (data) =>
         json = JSON.parse data
-        if json.error != 0
-          @set 'level', 100
 
   ready: ->
     if @get('bgcolor')
