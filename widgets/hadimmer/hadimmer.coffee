@@ -56,7 +56,10 @@ class Dashing.Hadimmer extends Dashing.ClickableWidget
       (data) =>
         json = JSON.parse data
         @set 'state', json.state
-        @set 'level', json.level
+        if json.level
+          @set 'level', json.level
+        else
+          @set 'level', @getLevel()
 
   postState: ->
     newState = @toggleState()

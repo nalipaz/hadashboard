@@ -38,7 +38,10 @@ class Dashing.Haslider extends Dashing.ClickableWidget
       (data) =>
         json = JSON.parse data
         @set 'state', json.state
-        if json.level then @set 'level', json.level else @set 'level', @getLevel()
+        if json.level 
+          @set 'level', json.level 
+        else
+          @set 'level', @getLevel()
 
   postState: ->
     newState = @toggleState()
