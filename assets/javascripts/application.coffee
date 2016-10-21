@@ -18,11 +18,16 @@ Dashing.on 'ready', ->
   contentWidth = (Dashing.widget_base_dimensions[0] + Dashing.widget_margins[0] * 2) * Dashing.numColumns
 
   Batman.setImmediate ->
-#    $('.gridster').width(contentWidth)
+    $('.gridster').width(contentWidth)
     $('.gridster > ul').gridster
       widget_margins: Dashing.widget_margins
       widget_base_dimensions: Dashing.widget_base_dimensions
+      avoid_overlapped_widgets: !Dashing.customGridsterLayout
+      max_size_x: Dashing.numColumns
       draggable:
-        handle: 'header'
-    .data('gridster')
+        stop: Dashing.showGridsterInstructions
+        start: -> Dashing.currentWidgetPositions = Dashing.getWidgetPositions()
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) )
+       $('.gridster > ul').each ->
+         $(@).gridster().data('gridster').draggable().disable()
     Dashing.cycleDashboards({timeInSeconds: 0, stagger: true, page: 1})
